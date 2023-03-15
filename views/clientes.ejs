@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Agregar estilos Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+        integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA=="
+        crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <title>Document</title>
+</head>
+
+<body>
+   
+    <h2 class="display-4 text-center animate__animated animate__bounce">Clientes</h2>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-md-6 mx-auto">
+            <form action="/clientes" method="POST">
+              <div class="form-group">
+                <label for="nombre" class="control-label text-center">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" class="form-control form-control-sm " required>
+              </div>
+              <div class="form-group">
+                <label for="direccion" class="control-label text-center">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" class="form-control form-control-sm " required>
+              </div>
+              <div class="form-group">
+                <label for="telefono" class="control-label text-center">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" class="form-control form-control-sm " required>
+              </div>
+              <div class="form-group">
+                <label for="productos" class="control-label text-center">Productos:</label>
+                <textarea id="productos" name="productos" class="form-control form-control-sm text-center" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary mx-auto d-block">Realizar pedido</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      
+</body>
+
+</html>

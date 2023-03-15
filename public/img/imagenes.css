@@ -1,0 +1,17 @@
+.clientes {
+    width: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.clientes:hover {
+    transform: scale(1.1);
+}
+
+.locales {
+    width: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.locales:hover {
+    transform: scale(1.1);
+}
