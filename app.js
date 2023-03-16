@@ -23,6 +23,26 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Conexión a la base de datos
+const connection = mysql.createConnection({
+  host: '127.0.0.1',
+  user: 'root',
+  password: '4321',
+  
+});
+
+// Verificar si la conexión fue exitosa antes de iniciar el servidor
+connection.connect(function(err) {
+  if (err) {
+    console.error('Error de conexión a la base de datos:', err);
+    return;
+  }
+  console.log('Conexión a la base de datos exitosa');
+  app.listen(PORT, function () {
+    console.log(`Servidor iniciado en el puerto ${PORT}`);
+  });
+});
+
 app.get('/', function (req, res) {
   res.render('index');
 });
@@ -41,14 +61,6 @@ app.post('/productos', upload.single('imagen'), function (req, res) {
   const precio = req.body.precio;
   const imagen = req.file;
 
-  // Conectarse a la base de datos
-  const connection = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: '4321',
-    database: 'enviosLT'
-  });
-
   // Insertar los datos del formulario en la tabla de productos
   connection.query('INSERT INTO productos (nombre, descripcion, precio, imagen) VALUES (?, ?, ?, ?)', [nombre, descripcion, precio, imagen.filename], function (err, result) {
     if (err) throw err;
@@ -60,14 +72,6 @@ app.post('/productos', upload.single('imagen'), function (req, res) {
 });
 
 app.get('/clientes', function (req, res) {
-  // Conectarse a la base de datos
-  const connection = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: '4321',
-    database: 'enviosLT'
-  });
-
   // Obtener todos los productos de la tabla
   connection.query('SELECT * FROM productos', function (err, results) {
     if (err) throw err;
@@ -75,11 +79,12 @@ app.get('/clientes', function (req, res) {
     // Renderizar la vista de productos con los datos obtenidos
     res.render('productos', { productos: results });
   });
-
-  // Cerrar la conexión a la base de datos
-  connection.end();
 });
 
-app.listen(PORT, function () {
-  console.log(`Servidor iniciado en el puerto ${PORT}`);
+// Cerrar la conexión a la base de datos cuando se cierra la aplicación
+process.on('SIGINT', function() {
+  connection.end(function() {
+    console.log('Conexión a la base de datos cerrada');
+    process.exit(0);
+  });
 });
